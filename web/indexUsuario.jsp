@@ -1,4 +1,20 @@
+<%-- 
+    Document   : indexUsuario
+    Created on : 24/11/2017, 03:45:55 PM
+    Author     : nicol
+--%>
+
+<%@page import="Modelo.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    HttpSession sesion = request.getSession();
+    Usuario usuario = (Usuario)sesion.getAttribute("Email");
+    if( usuario == null){
+      response.sendRedirect("index.jsp");
+    }else{ 
+     // if(usuario.getDoc_Abogado()==4567){
+%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -19,32 +35,26 @@
   <body>
 
     <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-      <a class="navbar-brand" href="index.jsp">Navbar</a>
+      <a class="navbar-brand" href="indexUsuario.jsp">Navbar</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+          
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="PerfilDeUsuario.jsp">Perfil <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="CrearProceso.jsp">Crear Procesos <span class="sr-only">(current)</span></a>
           </li>
           
-          <li class="nav-item dropdown">
-                        
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Formulario.jsp">Registrate!</a>
-          </li>
 
         </ul>
-        <form class="form-inline my-2 my-lg-0" method="POST" action="ServletLogin" name="frmAddUser" >
-          <input type="email" class="form-control" id="exampleInputEmail1" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
-           <input type="password" class="form-control" id="exampleInputPassword1" name="Contrasena" placeholder="Password">
-           
-           
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Entrar!</button>
-        </form>
+        <form class="form-inline mt-2 mt-md-0" action="ServletLogin" method="GET">
+          <button class="btn btn-outline-success my-2 my-sm-0" href="index.jsp" type="submit">Cerrar Sesion.</button>
+        </form>     
       </div>
     </nav>
 
@@ -131,3 +141,12 @@
     <script src="offcanvas.js"></script>
   </body>
 </html>
+
+<%}//else{
+%>
+ kdjfaklsdjlkaklfdaf
+
+<%
+// }
+//}
+%>

@@ -5,12 +5,17 @@
  */
 package Controlador;
 
+import DAO.DAOProceso;
+import Modelo.Usuario;
+import Modelo.Proceso;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -18,69 +23,74 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ServletProceso extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletProceso</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletProceso at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+   private static final long serialVersionUID = 1L;
+    private static String INSERT_OR_EDIT = "/CrearProceso.jsp";
+    private static String LIST_PROCESO = "/ListaDeProcesos.jsp";
+    private DAOProceso dao;
+
+    public ServletProceso() {
+        super();
+        dao = new DAOProceso();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String forward="";
+        String action = request.getParameter("action");
+
+       
+        
+        if (action.equalsIgnoreCase("delete")){
+            int Id_Proceso = Integer.parseInt(request.getParameter("Id_Proceso"));
+            dao.deleteProceso(Id_Proceso);
+            forward = LIST_PROCESO;
+            request.setAttribute("procesos", dao.getAllProcesos());    
+        } else if (action.equalsIgnoreCase("edit")){
+            forward = INSERT_OR_EDIT;
+            int Id_Proceso = Integer.parseInt(request.getParameter("userId"));
+            Proceso proceso = dao.getProcesosbyId(Id_Proceso);
+            request.setAttribute("proceso", proceso);
+        } else if (action.equalsIgnoreCase("listUser")){
+              HttpSession sesionUsuario = request.getSession();
+        Usuario _sesionUsuario = (Usuario)sesionUsuario.getAttribute("Email");
+            forward = LIST_PROCESO;
+            request.setAttribute("procesos", dao.getProcesosUsuario(_sesionUsuario.getDoc_Usuario()));
+        } else {
+            forward = INSERT_OR_EDIT;
         }
+
+        RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Proceso proceso = new Proceso();
+        HttpSession sesionUsuario = request.getSession();
+        Usuario _sesionUsuario = (Usuario)sesionUsuario.getAttribute("Email");
+         System.out.println("gggg" + _sesionUsuario);
+       
+        proceso.setNombre_Proceso(request.getParameter("Nombre_Proceso"));
+        proceso.setCiudad(request.getParameter("Ciudad"));
+        proceso.setEstado_Proceso(request.getParameter("Estado_Proceso"));
+        proceso.setRazon_Social(request.getParameter("Razon_Social"));
+        proceso.setId_Proceso(Integer.parseInt(request.getParameter("Id_Proceso")));
+    
+        proceso.setDoc_Usuario((_sesionUsuario.getDoc_Usuario()));
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        
+//        if(doc_abogado == null || doc_abogado.isEmpty())
+//        {
+            dao.addProceso(proceso);
+//        }
+//        else
+//        {
+//            abogado.setDoc_Abogado(Integer.parseInt(doc_abogado));
+//            dao.updateAbogado(abogado);
+//        }
+       
+        RequestDispatcher view = request.getRequestDispatcher(LIST_PROCESO);
+        request.setAttribute("procesos", dao.getAllProcesos());
+        view.forward(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    
 
 }

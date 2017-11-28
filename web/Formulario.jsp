@@ -1,116 +1,164 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
 
-<head>
-  <title>black &amp; white - a page</title>
-  <meta name="description" content="website description" />
-  <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-  <link rel="stylesheet" type="text/css" href="style/style.css" title="style" />
-</head>
+    <title>Off Canvas Template for Bootstrap</title>
 
-<body>
-  <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_text">
-          <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="Login.jsp">black<span class="logo_colour">&amp;white</span></a></h1>
-          <h2>Black &amp; White Website Template.</h2>
-        </div>
-      </div>    
-      <div id="menubar">
-        <ul id="menu">
-         
-           <li><a href="index.jsp">Vuelve al Inicio</a></li>
-           
-          
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="offcanvas.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
       </div>
-    </div>
-    <div id="content_header"></div>
-    <div id="site_content">
-      <div class="sidebar">
-        <!-- insert your sidebar items here -->
-        <h3>Latest News</h3>
-        <h4>New Website Launched</h4>
-        <h5>January 1st, 2010</h5>
-        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
-        <p></p>
-        <h4>New Website Launched</h4>
-        <h5>January 1st, 2010</h5>
-        <p>2010 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
-        <h3>Useful Links</h3>
-        <ul>
-          <li><a href="#">link 1</a></li>
-          <li><a href="#">link 2</a></li>
-          <li><a href="#">link 3</a></li>
-          <li><a href="#">link 4</a></li>
-        </ul>
-        <h3>Search</h3>
-       
-          <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
+    </nav>
+
+    <div class="container">
+
+      <div class="row row-offcanvas row-offcanvas-right">
+
+        <div class="col-12 col-md-9">
+          <p class="float-right d-md-none">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
           </p>
-         
-        
-              
-      </div>
-        
-        <form method="post" action="ServletAbogado" id="search_form"> 
-        
-                    <div id="content">
-          <ul class="form_settings">
-       
-        <h1>Registrate! </h1>
-              <label>Nombre</label><br>
-              <input ng-model="user.first_name" name="Nombre_Abogado" required type="text" ng-pattern="/^[a-zA-Z'. -]+$/" placeholder="Nombre"> <br>
-              <label>Apellido</label> <br>
-              <input ng-model="user.last_name" name="Apellido_Abogado" required type="text" ng-pattern="/^[a-zA-Z'. -]+$/" placeholder="Apellido"> <br>
-              <br> 
-              <select name="Tipo_Doc"> 
-                            <option value="cc">Cedula de Ciudadania</option>
-                            <option value="ce">Cedula de Extranjero</option>
-                            <option value="n">NIT</option>
-              </select>
-              <br>
-              
-              <input type="radio" name="Actividad" value="Activo"> Activo<br>
-              <input type="radio" name="Actividad" value="No Activo"> No activo<br>
-              
+          <div class="jumbotron">
+            <h1>Formulario de inscripcion</h1>
+            <p> Crea tu propia cuenta para interactuar!.</p>
+          </div>
+          <div class="row">
+              <form method="POST" action="ServletUsuario" name="frmAddUser">
+                  <div class="form-check">
+                      <label class="form-check-label">
+                          <input class="form-check-input" type="radio" name="Actividad" id="exampleRadios1" value="Cliente" checked>Cliente<br>
+                          
+                          <input class="form-check-input" type="radio" name="Actividad" id="exampleRadios1" value="Abogado" checked> Abogado
+                      </label>
+                  </div>
 
-              <br> <label>Numero de Documento</label> <br>   
-              <input ng-model="user.Documento" name="Doc_Abogado" required type="text" ng-pattern="/^[a-zA-Z'. -]+$/" placeholder="Numero Documento"> <br>    
-              <label>Ciudad</label><br>
-              <input ng-model="user.first_name" name="Ciudad" required type="text" ng-pattern="/^[a-zA-Z'. -]+$/" placeholder="Nombre"> <br>
-              
-              <label>Correo Electronico:</label> <br>
-              <input required type="email" name="Email" ng-model="user.email" ng-pattern="/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" placeholder="alguien@ejemplo.com" /><br>
-              <label>Contraseña:</label> <br>
-              <input name="Contraseña" ng-model="user.password" type="Contraseña" minlength="8" maxlength="100" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" required placeholder="********"> <br>
-              <label>Verifique contraseña:</label> <br>
-              <input name="Confirmar Contraseña" ng-model="user.confmPassword" type="Contraseña" minlength="8" maxlength="100" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" required compare-to="user.password" placeholder="********"><br>
-               
-              <br>  
-              <a style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Registrarse." /></a></ul>        
-             
-              </div>
-            
-            
-            <br>
-            <br>
-            
-            
-            </form>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Nombre</label>
+                      <input type="text" name="Nombre_Usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
+                      
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Apellido</label>
+                      <input type="text" name="Apellido_Usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Apellido">
+                      
+                  </div>
+                  Tipo de Identificacion:
+                  <select class="form-control" name="Tipo_Doc">
+                      <option>Cedula de Ciudadania</option>
+                      <option>NIT</option>
+                      <option>Cedula de extrangero</option>
+                  </select>
+                  <br>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Numero de Identifiacion</label>
+                      <input type="text" name="Doc_Usuario" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Num.Identificacion">
+                      
+                  </div>
+                  <br>
+                  Ciudad:
+                  <select class="form-control" name="Ciudad"> 
+                      <option>Bogota</option>
+                      <option>Medellin</option>
+                      <option>Cartagena</option>
+                  </select>
+                  <br>
+                  <div class="form-group">
+                      <label for="exampleInputEmail1">Email</label>
+                      <input type="email" name="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+                       </div>
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">contrasena</label>
+                      <input type="password" name="Contrasena" class="form-control" id="exampleInputPassword1" placeholder="Contrasena">
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleInputPassword1">Confirmar Contrasena</label>
+                      <input type="password" name="Contrasena" class="form-control" id="exampleInputPassword1" placeholder="Confirmar Contrasena">
+                  </div>
+                  <div class="form-check">
+                      <label class="form-check-label">
+                          
+                      </label>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+          </div><!--/row-->
+        </div><!--/span-->
 
-               
-    <div id="content_footer"></div>
-    <div id="footer">
-      Copyright &copy; black &amp; white | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">HTML5 Web Templates</a>
-    </div>
-  </div>
-</body>
+        <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2017</p>
+      </footer>
+
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="offcanvas.js"></script>
+  </body>
 </html>
-
-

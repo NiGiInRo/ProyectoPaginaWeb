@@ -5,24 +5,22 @@
  */
 package Controlador;
 
-import DAO.DAOProceso;
-import Modelo.Proceso;
+import DAO.DAOUsuario;
+import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author nicol
  */
-public class ServletTablaProcesos extends HttpServlet {
+public class ServletLogin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,8 +33,6 @@ public class ServletTablaProcesos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
      
     }
 
@@ -52,7 +48,12 @@ public class ServletTablaProcesos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       HttpSession sesionUsuario = request.getSession();
+        Usuario _sesionUsuario = (Usuario)sesionUsuario.getAttribute("Email");
+        if(_sesionUsuario!=null){
+          sesionUsuario.invalidate();
+          response.sendRedirect("index.jsp");
+        }
     }
 
     /**
@@ -66,28 +67,37 @@ public class ServletTablaProcesos extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         String login = request.getParameter("Email");
+        String pass = request.getParameter("Contrasena");
         
         
-            ArrayList<Proceso> lista = null;
-            DAOProceso abo;
-            
-        try {
-            abo = new DAOProceso();
+        Usuario datosUsuario = new Usuario();
+        datosUsuario.setEmail(login);
+        datosUsuario.setContrasena(pass);
+        System.out.println(datosUsuario);
         
-            lista=abo.getProcesos();
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletTablaProcesos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ServletTablaProcesos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ServletTablaProcesos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(ServletTablaProcesos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-              
-            request.setAttribute("procesos", lista);
-                   
-            
+        //Validaciones
+        DAOUsuario userDao = new DAOUsuario();
+        Usuario sesion = userDao.validar(datosUsuario);
+        HttpSession sesionUsuario = request.getSession();
+        Usuario _sesionUsuario = (Usuario)sesionUsuario.getAttribute("Email");
+        if(_sesionUsuario==null){
+         //El usuario no a creado la sesion
+          if(sesion != null){
+            sesionUsuario.setAttribute("Email", sesion);
+            sesionUsuario.setMaxInactiveInterval(20);
+              System.out.println("ola");
+            response.sendRedirect("PerfilDeUsuario.jsp");
+          }else{
+             response.sendRedirect("index.jsp");
+              System.out.println("aqui");
+          }
+         
+        }else{
+          response.sendRedirect("PerfilDeUsuario.jsp");
+            System.out.println("aqui2");
+        } 
+        
        
     }
 
